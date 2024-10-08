@@ -1,11 +1,11 @@
 package pageObjects.PIM.EmployeeList;
 
 import org.openqa.selenium.WebDriver;
-import pageObjects.PIMPageObject;
-import pageUIs.BasePageUI;
+import pageObjects.PimPO;
+import pageUIs.BasePUI;
 import pageUIs.PIM.EmployeeList.EmployeeListPUI;
 
-public class EmployeeListPO extends PIMPageObject {
+public class EmployeeListPO extends PimPO {
     private WebDriver driver;
 
     public EmployeeListPO(WebDriver driver) {
@@ -13,7 +13,7 @@ public class EmployeeListPO extends PIMPageObject {
         this.driver = driver;
     }
 
-    public void deleteEmployee(String employeeId) {
+    public void deleteEmployeeById(String employeeId) {
         waitForElementClickable(driver, EmployeeListPUI.DYNAMIC_DELETE_BUTTON, employeeId);
         clickOnElement(driver, EmployeeListPUI.DYNAMIC_DELETE_BUTTON, employeeId);
     }
@@ -21,6 +21,7 @@ public class EmployeeListPO extends PIMPageObject {
     public void confirmDeleteEmployee() {
         waitForElementClickable(driver, EmployeeListPUI.CONFIRM_DELETE_BUTTON);
         clickOnElement(driver, EmployeeListPUI.CONFIRM_DELETE_BUTTON);
-        waitForElementInvisible(driver, BasePageUI.AJAX_LOADING);
+        waitForElementInvisible(driver, BasePUI.AJAX_LOADING);
     }
+
 }

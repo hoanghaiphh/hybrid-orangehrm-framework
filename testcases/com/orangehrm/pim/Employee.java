@@ -10,14 +10,14 @@ import pageObjects.DashboardPO;
 import pageObjects.LoginPO;
 import pageObjects.PIM.AddEmployeePO;
 import pageObjects.PIM.EmployeeList.*;
-import pageObjects.PIMPageObject;
+import pageObjects.PimPO;
 import pageObjects.PageGenerator;
 
 public class Employee extends BaseTest {
 
     private LoginPO loginPage;
     private DashboardPO dashboardPage;
-    private PIMPageObject pimPage;
+    private PimPO pimPage;
     private EmployeeListPO employeeListPage;
     private AddEmployeePO addEmployeePage;
     private PersonalDetailsPO personalDetailsPage;
@@ -57,7 +57,7 @@ public class Employee extends BaseTest {
         pimPage = dashboardPage.openPIMPage();
 
         log.info("Employee_01_Add_Employee - Step 02: Open Add Employee Page");
-        pimPage.clickOnLink("Add Employee");
+        pimPage.openPageByLinkText("Add Employee");
         addEmployeePage = PageGenerator.getAddEmployeePage(driver);
 
         log.info("Employee_01_Add_Employee - Step 03: Input value to First Name Textbox: " + firstName);
@@ -101,63 +101,63 @@ public class Employee extends BaseTest {
 
     @Test
     public void Employee_03_Contact_Details() {
-        personalDetailsPage.clickOnLink("Contact Details");
+        personalDetailsPage.openPageByLinkText("Contact Details");
         contactDetailsPage = PageGenerator.getContactDetailsPage(driver);
 
     }
 
     @Test
     public void Employee_04_Emergency_Contacts() {
-        contactDetailsPage.clickOnLink("Emergency Contacts");
+        contactDetailsPage.openPageByLinkText("Emergency Contacts");
         emergencyContactsPage = PageGenerator.getEmergencyContactsPage(driver);
 
     }
 
     @Test
     public void Employee_05_Dependents() {
-        emergencyContactsPage.clickOnLink("Dependents");
+        emergencyContactsPage.openPageByLinkText("Dependents");
         dependentsPage = PageGenerator.getDependentsPage(driver);
 
     }
 
     @Test
     public void Employee_06_Immigration() {
-        dependentsPage.clickOnLink("Immigration");
+        dependentsPage.openPageByLinkText("Immigration");
         immigrationPage = PageGenerator.getImmigrationPage(driver);
 
     }
 
     @Test
     public void Employee_07_Job() {
-        immigrationPage.clickOnLink("Job");
+        immigrationPage.openPageByLinkText("Job");
         jobPage = PageGenerator.getJobPage(driver);
 
     }
 
     @Test
     public void Employee_08_Salary() {
-        jobPage.clickOnLink("Salary");
+        jobPage.openPageByLinkText("Salary");
         salaryPage = PageGenerator.getSalaryPage(driver);
 
     }
 
     @Test
     public void Employee_09_Report_To() {
-        salaryPage.clickOnLink("Report-to");
+        salaryPage.openPageByLinkText("Report-to");
         reportToPage = PageGenerator.getReportToPage(driver);
 
     }
 
     @Test
     public void Employee_10_Qualifications() {
-        reportToPage.clickOnLink("Qualifications");
+        reportToPage.openPageByLinkText("Qualifications");
         qualificationsPage = PageGenerator.getQualificationsPage(driver);
 
     }
 
     @Test
     public void Employee_11_Memberships() {
-        qualificationsPage.clickOnLink("Memberships");
+        qualificationsPage.openPageByLinkText("Memberships");
         membershipsPage = PageGenerator.getMembershipsPage(driver);
 
     }
@@ -165,11 +165,11 @@ public class Employee extends BaseTest {
     @Test
     public void Employee_12_Delete_Employee() {
         log.info("Employee_12_Delete_Employee - Step 01: Open Employee List Page");
-        membershipsPage.clickOnLink("Employee List");
+        membershipsPage.openPageByLinkText("Employee List");
         employeeListPage = PageGenerator.getEmployeeListPage(driver);
 
         log.info("Employee_12_Delete_Employee - Step 02: Delete Employee by ID: " + employeeId);
-        employeeListPage.deleteEmployee(employeeId);
+        employeeListPage.deleteEmployeeById(employeeId);
 
         log.info("Employee_12_Delete_Employee - Step 03: Confirm Delete");
         employeeListPage.confirmDeleteEmployee();

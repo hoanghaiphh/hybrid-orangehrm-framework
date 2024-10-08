@@ -1,9 +1,9 @@
 package pageObjects.PIM.EmployeeList;
 
 import org.openqa.selenium.WebDriver;
-import pageObjects.PIMPageObject;
+import pageObjects.PimPO;
 
-public class SalaryPO extends PIMPageObject {
+public class SalaryPO extends PimPO {
     private WebDriver driver;
 
     public SalaryPO(WebDriver driver) {

@@ -1,9 +1,9 @@
 package pageObjects.PIM.EmployeeList;
 
 import org.openqa.selenium.WebDriver;
-import pageObjects.PIMPageObject;
+import pageObjects.PimPO;
 
-public class ImmigrationPO extends PIMPageObject {
+public class ImmigrationPO extends PimPO {
     private WebDriver driver;
 
     public ImmigrationPO(WebDriver driver) {

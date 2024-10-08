@@ -2,12 +2,12 @@ package pageObjects.PIM;
 
 import org.openqa.selenium.WebDriver;
 import pageObjects.PIM.EmployeeList.PersonalDetailsPO;
-import pageObjects.PIMPageObject;
+import pageObjects.PimPO;
 import pageObjects.PageGenerator;
-import pageUIs.BasePageUI;
+import pageUIs.BasePUI;
 import pageUIs.PIM.AddEmployeePUI;
 
-public class AddEmployeePO extends PIMPageObject {
+public class AddEmployeePO extends PimPO {
     private WebDriver driver;
 
     public AddEmployeePO(WebDriver driver) {
@@ -43,8 +43,8 @@ public class AddEmployeePO extends PIMPageObject {
     }
 
     public void turnOnCreateLoginDetails() {
-        waitForElementClickable(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_LABEL);
         if (!isElementSelected(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_CHECKBOX)) {
+            waitForElementClickable(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_LABEL);
             clickOnElement(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_LABEL);
         }
     }
@@ -69,15 +69,13 @@ public class AddEmployeePO extends PIMPageObject {
 
     public void selectEnabledStatus() {
         waitForElementClickable(driver, AddEmployeePUI.ENABLED_LABEL);
-        if (!isElementSelected(driver, AddEmployeePUI.ENABLED_RADIO)) {
-            clickOnElement(driver, AddEmployeePUI.ENABLED_LABEL);
-        }
+        clickOnElement(driver, AddEmployeePUI.ENABLED_LABEL);
     }
 
     public PersonalDetailsPO saveInformation() {
         waitForElementClickable(driver, AddEmployeePUI.SAVE_BUTTON);
         clickOnElement(driver, AddEmployeePUI.SAVE_BUTTON);
-        waitForElementInvisible(driver, BasePageUI.AJAX_LOADING);
+        waitForElementInvisible(driver, BasePUI.AJAX_LOADING);
         return PageGenerator.getPersonalDetailsPage(driver);
     }
 }

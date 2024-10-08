@@ -2,7 +2,7 @@ package pageObjects;
 
 import org.openqa.selenium.WebDriver;
 
-public class DashboardPO extends BasePageObject {
+public class DashboardPO extends BasePO {
     private WebDriver driver;
 
     public DashboardPO(WebDriver driver) {

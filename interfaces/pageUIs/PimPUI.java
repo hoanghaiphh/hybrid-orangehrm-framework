@@ -1,6 +1,6 @@
 package pageUIs;
 
-public class PIMPageUI {
+public class PimPUI {
 
     public static final String DYNAMIC_LINK = "xpath=//a[text()='%s']";
 

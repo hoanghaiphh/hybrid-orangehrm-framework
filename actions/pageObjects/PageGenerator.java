@@ -14,8 +14,8 @@ public class PageGenerator {
         return new DashboardPO(driver);
     }
 
-    public static PIMPageObject getPIMPage(WebDriver driver) {
-        return new PIMPageObject(driver);
+    public static PimPO getPIMPage(WebDriver driver) {
+        return new PimPO(driver);
     }
 
     public static AddEmployeePO getAddEmployeePage(WebDriver driver) {
@@ -65,4 +65,5 @@ public class PageGenerator {
     public static SalaryPO getSalaryPage(WebDriver driver) {
         return new SalaryPO(driver);
     }
+
 }
