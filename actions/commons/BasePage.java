@@ -26,6 +26,21 @@ public class BasePage {
 
 //  Browser ------------------------------------------------------------------------------------------------------------
 
+    public static String getCurrentBrowserName(WebDriver driver) {
+        String driverInstanceName = driver.toString().toLowerCase();
+        if (driverInstanceName.contains("chrome")) {
+            return  "CHROME";
+        } else if (driverInstanceName.contains("firefox")) {
+            return "FIREFOX";
+        } else if (driverInstanceName.contains("edge")) {
+            return "EDGE";
+        } else if (driverInstanceName.contains("safari")) {
+            return "SAFARI";
+        } else {
+            return "UNKNOWN";
+        }
+    }
+
     public void openUrl(WebDriver driver, String pageUrl) {
         driver.get(pageUrl);
     }
@@ -171,6 +186,16 @@ public class BasePage {
         new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
                 .until(ExpectedConditions.invisibilityOfElementLocated(getDynamicLocator(locator, restParameter)));
         setImplicitlyWait(driver, GlobalConstants.LONG_TIMEOUT);
+    }
+
+    protected void waitForAllElementsInvisible(WebDriver driver, String locator, String... restParameter) {
+        setImplicitlyWait(driver, GlobalConstants.SHORT_TIMEOUT);
+        List<WebElement> elements = getListElements(driver, locator, restParameter);
+        setImplicitlyWait(driver, GlobalConstants.LONG_TIMEOUT);
+        if (!elements.isEmpty()) {
+            new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT))
+                    .until(ExpectedConditions.invisibilityOfAllElements(elements));
+        }
     }
 
     protected void waitForElementClickable(WebDriver driver, String locator, String... restParameter) {

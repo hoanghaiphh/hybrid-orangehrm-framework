@@ -1,23 +1,24 @@
 package commons;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import reportConfig.ExtentManager;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.time.Duration;
 
 public class BaseTest {
     protected WebDriver driver;
-    protected final Logger log;
 
-    protected BaseTest() {
-        log = LogManager.getLogger(getClass());
+    public WebDriver getDriver() {
+        return driver;
     }
 
     protected WebDriver openBrowserWithUrl(String browserName, String url) {
@@ -76,22 +77,13 @@ public class BaseTest {
         }
     }
 
-    @BeforeSuite
-    protected void clearReport() {
-        deleteAllFilesInFolder(GlobalConstants.LOGS_FOLDER_PATH);
+    @BeforeMethod
+    protected void extentStartTest(Method method) {
+        ExtentManager.startTest(method.getName() + " - Run on " + BasePage.getCurrentBrowserName(driver), method.getName());
     }
 
-    private void deleteAllFilesInFolder(String folder) {
-        try {
-            File[] listOfFiles = new File(folder).listFiles();
-            for (File file : listOfFiles) {
-                if (file.isFile() && !file.getName().equals("Fixed.log")) {
-                    file.delete();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    protected void extentLog(String msg) {
+        ExtentManager.getTest().log(Status.INFO, msg);
     }
 
 }

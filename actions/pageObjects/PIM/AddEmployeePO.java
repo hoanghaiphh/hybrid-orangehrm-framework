@@ -1,10 +1,7 @@
 package pageObjects.PIM;
 
 import org.openqa.selenium.WebDriver;
-import pageObjects.PIM.EmployeeList.PersonalDetailsPO;
 import pageObjects.PimPO;
-import pageObjects.PageGenerator;
-import pageUIs.BasePUI;
 import pageUIs.PIM.AddEmployeePUI;
 
 public class AddEmployeePO extends PimPO {
@@ -15,67 +12,65 @@ public class AddEmployeePO extends PimPO {
         this.driver = driver;
     }
 
-    public void inputEmployeeFirstName(String firstName) {
+    public void sendKeysToFirstNameTextbox(String firstName) {
         waitForElementVisible(driver, AddEmployeePUI.FIRST_NAME_TEXTBOX);
         clearElementText(driver, AddEmployeePUI.FIRST_NAME_TEXTBOX);
         sendKeysToElement(driver, AddEmployeePUI.FIRST_NAME_TEXTBOX, firstName);
     }
 
-    public void inputEmployeeMiddleName(String middleName) {
+    public void sendKeysToMiddleNameTextbox(String middleName) {
         waitForElementVisible(driver, AddEmployeePUI.MIDDLE_NAME_TEXTBOX);
         clearElementText(driver, AddEmployeePUI.MIDDLE_NAME_TEXTBOX);
         sendKeysToElement(driver, AddEmployeePUI.MIDDLE_NAME_TEXTBOX, middleName);
     }
 
-    public void inputEmployeeLastName(String lastName) {
+    public void sendKeysToLastNameTextbox(String lastName) {
         waitForElementVisible(driver, AddEmployeePUI.LAST_NAME_TEXTBOX);
         clearElementText(driver, AddEmployeePUI.LAST_NAME_TEXTBOX);
         sendKeysToElement(driver, AddEmployeePUI.LAST_NAME_TEXTBOX, lastName);
     }
 
-    public void uploadEmployeeProfilePicture(String profilePicturePath) {
+    public void uploadProfilePicture(String profilePicturePath) {
         sendKeysToElement(driver, AddEmployeePUI.PROFILE_PICTURE_UPLOAD, profilePicturePath);
     }
 
-    public String getEmployeeId() {
+    public String getValueOfEmployeeIdTextbox() {
         waitForElementVisible(driver, AddEmployeePUI.EMPLOYEE_ID_TEXTBOX);
         return getAttributeValue(driver, AddEmployeePUI.EMPLOYEE_ID_TEXTBOX, "value");
     }
 
-    public void turnOnCreateLoginDetails() {
+    public void switchOnCreateLoginDetails() {
         if (!isElementSelected(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_CHECKBOX)) {
             waitForElementClickable(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_LABEL);
             clickOnElement(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_LABEL);
         }
     }
 
-    public void inputEmployeeUsername(String userName) {
-        waitForElementVisible(driver, AddEmployeePUI.USERNAME_TEXTBOX);
-        clearElementText(driver, AddEmployeePUI.USERNAME_TEXTBOX);
-        sendKeysToElement(driver, AddEmployeePUI.USERNAME_TEXTBOX, userName);
+    public void sendKeysToEmployeeUsernameTextbox(String userName) {
+        waitForElementVisible(driver, AddEmployeePUI.EMPLOYEE_USERNAME_TEXTBOX);
+        clearElementText(driver, AddEmployeePUI.EMPLOYEE_USERNAME_TEXTBOX);
+        sendKeysToElement(driver, AddEmployeePUI.EMPLOYEE_USERNAME_TEXTBOX, userName);
     }
 
-    public void inputEmployeePassword(String password) {
-        waitForElementVisible(driver, AddEmployeePUI.PASSWORD_TEXTBOX);
-        clearElementText(driver, AddEmployeePUI.PASSWORD_TEXTBOX);
-        sendKeysToElement(driver, AddEmployeePUI.PASSWORD_TEXTBOX, password);
+    public void sendKeysToEmployeePasswordTextbox(String password) {
+        waitForElementVisible(driver, AddEmployeePUI.EMPLOYEE_PASSWORD_TEXTBOX);
+        clearElementText(driver, AddEmployeePUI.EMPLOYEE_PASSWORD_TEXTBOX);
+        sendKeysToElement(driver, AddEmployeePUI.EMPLOYEE_PASSWORD_TEXTBOX, password);
     }
 
-    public void confirmEmployeePassword(String password) {
-        waitForElementVisible(driver, AddEmployeePUI.CONFIRM_PASSWORD_TEXTBOX);
-        clearElementText(driver, AddEmployeePUI.CONFIRM_PASSWORD_TEXTBOX);
-        sendKeysToElement(driver, AddEmployeePUI.CONFIRM_PASSWORD_TEXTBOX, password);
+    public void sendKeysToEmployeeConfirmPasswordTextbox(String password) {
+        waitForElementVisible(driver, AddEmployeePUI.EMPLOYEE_CONFIRM_PASSWORD_TEXTBOX);
+        clearElementText(driver, AddEmployeePUI.EMPLOYEE_CONFIRM_PASSWORD_TEXTBOX);
+        sendKeysToElement(driver, AddEmployeePUI.EMPLOYEE_CONFIRM_PASSWORD_TEXTBOX, password);
     }
 
-    public void selectEnabledStatus() {
-        waitForElementClickable(driver, AddEmployeePUI.ENABLED_LABEL);
-        clickOnElement(driver, AddEmployeePUI.ENABLED_LABEL);
+    public void selectStatusEnabledRadioButton() {
+        waitForElementClickable(driver, AddEmployeePUI.ENABLED_RADIO);
+        clickOnElement(driver, AddEmployeePUI.ENABLED_RADIO);
     }
 
-    public PersonalDetailsPO saveInformation() {
-        waitForElementClickable(driver, AddEmployeePUI.SAVE_BUTTON);
-        clickOnElement(driver, AddEmployeePUI.SAVE_BUTTON);
-        waitForElementInvisible(driver, BasePUI.AJAX_LOADING);
-        return PageGenerator.getPersonalDetailsPage(driver);
+    public void clickOnAddEmployeeSaveButton() {
+        waitForElementClickable(driver, AddEmployeePUI.ADD_EMPLOYEE_SAVE_BUTTON);
+        clickOnElement(driver, AddEmployeePUI.ADD_EMPLOYEE_SAVE_BUTTON);
     }
 }

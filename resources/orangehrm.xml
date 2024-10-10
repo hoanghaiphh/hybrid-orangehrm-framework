@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="OrangeHRM Automation Testing" parallel="tests" thread-count="3">
+<suite name="OrangeHRM Automation Testing">
+
+    <listeners>
+        <listener class-name="reportConfig.ExtentListener"/>
+    </listeners>
+
+    <!--<parameter name="url" value="http://localhost:90/orangehrm-5.7/web/index.php/auth/login"/>-->
 
     <test name="Run on Firefox browser">
         <parameter name="browser" value="Firefox"/>
         <classes>
-            <class name="com.orangehrm.pim.Employee"/>
+            <class name="com.orangehrm.pim.PIM_01_Employee"/>
         </classes>
     </test>
 
-    <!--<test name="Run on Chrome browser">
+    <test name="Run on Chrome browser">
         <parameter name="browser" value="Chrome"/>
         <classes>
-            <class name="com.orangehrm.pim.Employee"/>
+            <class name="com.orangehrm.pim.PIM_01_Employee"/>
         </classes>
     </test>
 
     <test name="Run on Edge browser">
         <parameter name="browser" value="Edge"/>
         <classes>
-            <class name="com.orangehrm.pim.Employee"/>
+            <class name="com.orangehrm.pim.PIM_01_Employee"/>
         </classes>
-    </test>-->
+    </test>
 
 </suite>

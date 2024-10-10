@@ -66,4 +66,8 @@ public class PageGenerator {
         return new SalaryPO(driver);
     }
 
+    public static ProfilePicturePO getProfilePicturePage(WebDriver driver) {
+        return new ProfilePicturePO(driver);
+    }
+
 }

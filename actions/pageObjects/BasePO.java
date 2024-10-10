@@ -11,11 +11,22 @@ public class BasePO extends BasePage {
         this.driver = driver;
     }
 
-    public PimPO openPIMPage() {
-        waitForElementClickable(driver, BasePUI.PIM_MENU);
-        clickOnElement(driver, BasePUI.PIM_MENU);
-        waitForElementInvisible(driver, BasePUI.AJAX_LOADING);
+    public void waitForLoading() {
+        waitForAllElementsInvisible(driver, BasePUI.LOADING_SPINNER);
+    }
+
+    public PimPO clickOnSidePanelLink(String linkText) {
+        waitForElementClickable(driver, BasePUI.DYNAMIC_SIDEPANEL_LINK, linkText);
+        clickOnElement(driver, BasePUI.DYNAMIC_SIDEPANEL_LINK, linkText);
+        waitForLoading();
         return PageGenerator.getPIMPage(driver);
     }
+
+    public boolean isToastMessageDisplayed(String msg) {
+        waitForElementVisible(driver, BasePUI.DYNAMIC_TOAST_MESSAGE, msg);
+        return isElementDisplayed(driver, BasePUI.DYNAMIC_TOAST_MESSAGE, msg);
+    }
+
+
 
 }

@@ -1,5 +1,7 @@
 package commons;
 
+import java.io.File;
+
 public class GlobalConstants {
     // System Information
     public static final String PROJECT_PATH = System.getProperty("user.dir");
@@ -18,5 +20,5 @@ public class GlobalConstants {
 
     // Directory
     public static final String UPLOAD_FOLDER_PATH = PROJECT_PATH + SEPARATOR + "uploadFiles" + SEPARATOR;
-    public static final String LOGS_FOLDER_PATH = PROJECT_PATH + SEPARATOR + "logs" + SEPARATOR;
+    public static final String EXTENT_REPORTS_FOLDER_PATH = PROJECT_PATH + SEPARATOR + "extentReports" + SEPARATOR;
 }
