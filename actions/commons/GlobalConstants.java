@@ -10,7 +10,7 @@ public class GlobalConstants {
     public static final String JAVA_VERSION = System.getProperty("java.version");
 
     // App Information
-    public static final String URL = "http://localhost:90/orangehrm-5.7/web/index.php/auth/login";
+    public static final String URL = "http://localhost:90/orangehrm-5.6.1/web/index.php/auth/login";
     public static final String ADMIN_USERNAME = "haiph";
     public static final String ADMIN_PASSWORD = "blUEstAr.1510";
 

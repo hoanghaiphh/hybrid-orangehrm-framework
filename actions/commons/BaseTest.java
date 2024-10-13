@@ -7,12 +7,14 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import reportConfig.ExtentManager;
 
-import java.io.File;
 import java.lang.reflect.Method;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BaseTest {
     protected WebDriver driver;
@@ -84,6 +86,56 @@ public class BaseTest {
 
     protected void extentLog(String msg) {
         ExtentManager.getTest().log(Status.INFO, msg);
+    }
+
+    protected String getRandomDriverLicense() {
+        Random r = new Random();
+        return (1000 + r.nextInt(9000)) + "-" + (1000 + r.nextInt(9000)) + "-" + (1000 + r.nextInt(9000));
+    }
+
+    protected String getRandomGender() {
+        int randNumber = new Random().nextInt(2);
+        if (randNumber == 0) {
+            return "Male";
+        } else {
+            return "Female";
+        }
+    }
+
+    protected String getRandomMaritalStatus() {
+        int randNumber = new Random().nextInt(3);
+        if (randNumber == 0) {
+            return "Single";
+        } else if (randNumber == 1) {
+            return "Married";
+        } else {
+            return "Other";
+        }
+    }
+
+    protected String getRandomNationality() {
+        int randNumber = new Random().nextInt(3);
+        if (randNumber == 0) {
+            return "British";
+        } else if (randNumber == 1) {
+            return "Australian";
+        } else {
+            return "American";
+        }
+    }
+
+    protected String getRandomDateWithinYearRange(int startYear, int endYear) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.of(startYear, 1, 1);
+        LocalDate endDate = LocalDate.of(endYear, 12, 31);
+
+        long startEpochDay = startDate.toEpochDay();
+        long endEpochDay = endDate.toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(startEpochDay, endEpochDay);
+
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+
+        return randomDate.format(formatter);
     }
 
 }

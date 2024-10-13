@@ -28,4 +28,9 @@ public class PimPO extends BasePO {
         clickOnElement(driver, PimPUI.PROFILE_PICTURE_IMAGE);
         waitForLoading();
     }
+
+    public String getEmployeeName() {
+        waitForElementVisible(driver, PimPUI.EMPLOYEE_NAME);
+        return getElementText(driver, PimPUI.EMPLOYEE_NAME);
+    }
 }

@@ -40,9 +40,8 @@ public class AddEmployeePO extends PimPO {
     }
 
     public void switchOnCreateLoginDetails() {
-        if (!isElementSelected(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_CHECKBOX)) {
-            waitForElementClickable(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_LABEL);
-            clickOnElement(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_LABEL);
+        if (!isElementSelected(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_SWITCH)) {
+            clickOnElementByJS(driver, AddEmployeePUI.CREATE_LOGIN_DETAIL_SWITCH);
         }
     }
 
@@ -64,9 +63,10 @@ public class AddEmployeePO extends PimPO {
         sendKeysToElement(driver, AddEmployeePUI.EMPLOYEE_CONFIRM_PASSWORD_TEXTBOX, password);
     }
 
-    public void selectStatusEnabledRadioButton() {
-        waitForElementClickable(driver, AddEmployeePUI.ENABLED_RADIO);
-        clickOnElement(driver, AddEmployeePUI.ENABLED_RADIO);
+    public void selectStatusEnabledRadio() {
+        if (!isElementSelected(driver, AddEmployeePUI.STATUS_ENABLED_RADIO)) {
+            clickOnElementByJS(driver, AddEmployeePUI.STATUS_ENABLED_RADIO);
+        }
     }
 
     public void clickOnAddEmployeeSaveButton() {

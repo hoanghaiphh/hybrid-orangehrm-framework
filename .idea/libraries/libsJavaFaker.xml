@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="libsJavaFaker">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libsJavaFaker/automaton-1.11-8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libsJavaFaker/commons-lang3-3.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libsJavaFaker/generex-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libsJavaFaker/javafaker-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libsJavaFaker/snakeyaml-1.23-android.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -22,11 +22,9 @@ public class BasePO extends BasePage {
         return PageGenerator.getPIMPage(driver);
     }
 
-    public boolean isToastMessageDisplayed(String msg) {
-        waitForElementVisible(driver, BasePUI.DYNAMIC_TOAST_MESSAGE, msg);
-        return isElementDisplayed(driver, BasePUI.DYNAMIC_TOAST_MESSAGE, msg);
+    public String getToastMessage() {
+        waitForElementVisible(driver, BasePUI.TOAST_MESSAGE);
+        return getElementText(driver, BasePUI.TOAST_MESSAGE);
     }
-
-
 
 }

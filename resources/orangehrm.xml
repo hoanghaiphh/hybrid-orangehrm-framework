@@ -6,7 +6,7 @@
         <listener class-name="reportConfig.ExtentListener"/>
     </listeners>
 
-    <!--<parameter name="url" value="http://localhost:90/orangehrm-5.7/web/index.php/auth/login"/>-->
+    <!--<parameter name="url" value="http://localhost:90/orangehrm-5.6.1/web/index.php/auth/login"/>-->
 
     <test name="Run on Firefox browser">
         <parameter name="browser" value="Firefox"/>

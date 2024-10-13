@@ -12,5 +12,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="libsSeleniumTestng" level="project" />
     <orderEntry type="library" name="libsExtentReports" level="project" />
+    <orderEntry type="library" name="libsJavaFaker" level="project" />
   </component>
 </module>

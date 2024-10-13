@@ -21,7 +21,7 @@ public class ProfilePicturePO extends PimPO {
         return new Dimension(naturalWidth, naturalHeight);
     }
 
-    public void uploadNewProfilePicture(String profilePicturePath) {
+    public void uploadProfilePicture(String profilePicturePath) {
         sendKeysToElement(driver, ProfilePicturePUI.PROFILE_PICTURE_UPLOAD, profilePicturePath);
     }
 

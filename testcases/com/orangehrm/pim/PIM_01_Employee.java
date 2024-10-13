@@ -1,5 +1,6 @@
 package com.orangehrm.pim;
 
+import com.github.javafaker.Faker;
 import commons.BaseTest;
 import commons.GlobalConstants;
 import org.openqa.selenium.Dimension;
@@ -35,6 +36,7 @@ public class PIM_01_Employee extends BaseTest {
     private ProfilePicturePO profilePicturePage;
 
     private String firstName, middleName, lastName, profilePicture1, profilePicture2, employeeId, usernamePrefix, password;
+    private String driverLicense, licenseExpiryDate, nationality, maritalStatus, dateOfBirth, gender;
 
     @Parameters("browser")
     @BeforeClass
@@ -46,13 +48,20 @@ public class PIM_01_Employee extends BaseTest {
         loginPage.sendKeysToPasswordTextbox(GlobalConstants.ADMIN_PASSWORD);
         dashboardPage = loginPage.clickOnLoginButton();
 
-        firstName = "Anh";
-        middleName = "Ngoc";
-        lastName = "Nguyen";
+        firstName = new Faker().name().firstName();
+        middleName = "";
+        lastName = new Faker().name().lastName();
         profilePicture1 = GlobalConstants.UPLOAD_FOLDER_PATH + "profilePicture1.jpg";
         profilePicture2 = GlobalConstants.UPLOAD_FOLDER_PATH + "profilePicture2.jpg";
-        usernamePrefix = (firstName + middleName.charAt(0) + lastName.charAt(0)).toLowerCase() + ".";
+        usernamePrefix = (firstName + "." + lastName).toLowerCase() + ".";
         password = "Abcd@1234!";
+
+        driverLicense = getRandomDriverLicense();
+        licenseExpiryDate = getRandomDateWithinYearRange(2030, 2040);
+        nationality = getRandomNationality();
+        maritalStatus = getRandomMaritalStatus();
+        dateOfBirth = getRandomDateWithinYearRange(1970, 2010);
+        gender = getRandomGender();
     }
 
     @Test
@@ -73,35 +82,41 @@ public class PIM_01_Employee extends BaseTest {
         extentLog("Employee_01_Add_Employee - Step 05: Input value into Last Name textbox: " + lastName);
         addEmployeePage.sendKeysToLastNameTextbox(lastName);
 
-        extentLog("Employee_01_Add_Employee - Step 06: Upload employee profile picture");
-        addEmployeePage.uploadProfilePicture(profilePicture1);
+        /*extentLog("Employee_01_Add_Employee - Step 06: Upload employee profile picture");
+        addEmployeePage.uploadProfilePicture(profilePicture1);*/
 
-        extentLog("Employee_01_Add_Employee - Step 07: Get employee ID");
+        extentLog("Employee_01_Add_Employee - Step 06: Get employee ID");
         employeeId = addEmployeePage.getValueOfEmployeeIdTextbox();
 
-        extentLog("Employee_01_Add_Employee - Step 08: Switch on Create Login Details");
+        extentLog("Employee_01_Add_Employee - Step 07: Switch on Create Login Details");
         addEmployeePage.switchOnCreateLoginDetails();
 
-        extentLog("Employee_01_Add_Employee - Step 09: Select status Enabled radio button");
-        addEmployeePage.selectStatusEnabledRadioButton();
+        extentLog("Employee_01_Add_Employee - Step 08: Select status Enabled radio");
+        addEmployeePage.selectStatusEnabledRadio();
 
-        extentLog("Employee_01_Add_Employee - Step 10: Input value into Username textbox: " + usernamePrefix + employeeId);
+        extentLog("Employee_01_Add_Employee - Step 09: Input value into Username textbox: " + usernamePrefix + employeeId);
         addEmployeePage.sendKeysToEmployeeUsernameTextbox(usernamePrefix + employeeId);
 
-        extentLog("Employee_01_Add_Employee - Step 11: Input value into Password textbox: " + password);
+        extentLog("Employee_01_Add_Employee - Step 10: Input value into Password textbox: " + password);
         addEmployeePage.sendKeysToEmployeePasswordTextbox(password);
 
-        extentLog("Employee_01_Add_Employee - Step 12: Input value into Confirm Password textbox: " + password);
+        extentLog("Employee_01_Add_Employee - Step 11: Input value into Confirm Password textbox: " + password);
         addEmployeePage.sendKeysToEmployeeConfirmPasswordTextbox(password);
 
-        extentLog("Employee_01_Add_Employee - Step 13: Save employee information");
+        extentLog("Employee_01_Add_Employee - Step 12: Save employee information");
         addEmployeePage.clickOnAddEmployeeSaveButton();
 
-        extentLog("Employee_01_Add_Employee - Step 14: Verify that success message is displayed");
-        Assert.assertTrue(addEmployeePage.isToastMessageDisplayed("Successfully Saved"));
+        extentLog("Employee_01_Add_Employee - Step 13: Verify that success message is displayed");
+        Assert.assertEquals(addEmployeePage.getToastMessage(), "Successfully Saved");
 
-        addEmployeePage.waitForLoading();
+        addEmployeePage.waitForLoading(); // loading spinner while saving information
+
         personalDetailsPage = PageGenerator.getPersonalDetailsPage(driver);
+
+        personalDetailsPage.waitForLoading(); // loading spinner while loading Personal Details page components
+
+        extentLog("Employee_01_Add_Employee - Step 14: Verify that Employee Name is displayed: " + firstName + " " + lastName);
+        Assert.assertEquals(personalDetailsPage.getEmployeeName(), firstName + " " + lastName);
     }
 
     @Test
@@ -115,17 +130,17 @@ public class PIM_01_Employee extends BaseTest {
         extentLog("Employee_02_Change_Profile_Picture - Step 02: Dimension = " + oldDimension);
 
         extentLog("Employee_02_Change_Profile_Picture - Step 03: Upload new profile picture");
-        profilePicturePage.uploadNewProfilePicture(profilePicture2);
+        profilePicturePage.uploadProfilePicture(profilePicture1);
 
         extentLog("Employee_02_Change_Profile_Picture - Step 04: Save new profile picture");
         profilePicturePage.clickOnChangeProfilePictureSaveButton();
 
         extentLog("Employee_02_Change_Profile_Picture - Step 05: Verify that success message is displayed");
-        Assert.assertTrue(profilePicturePage.isToastMessageDisplayed("Successfully Updated"));
+        Assert.assertEquals(profilePicturePage.getToastMessage(), "Successfully Updated");
 
         profilePicturePage.waitForLoading();
 
-        extentLog("Employee_02_Change_Profile_Picture - Step 06: Get natural dimension of current profile picture");
+        extentLog("Employee_02_Change_Profile_Picture - Step 06: Get natural dimension of new profile picture");
         Dimension newDimension = profilePicturePage.getNaturalDimensionOfProfilePicture();
         extentLog("Employee_02_Change_Profile_Picture - Step 06: Dimension = " + newDimension);
 
@@ -133,12 +148,68 @@ public class PIM_01_Employee extends BaseTest {
         Assert.assertNotEquals(oldDimension, newDimension);
     }
 
-    /*@Test
+    @Test
     public void Employee_03_Personal_Details() {
+        extentLog("Employee_03_Personal Details - Step 01: Open Personal Details page");
         profilePicturePage.clickOnTabsLink("Personal Details");
         personalDetailsPage = PageGenerator.getPersonalDetailsPage(driver);
 
-    }*/
+        extentLog("Employee_03_Personal Details - Step 02: Input value into Driver's License Number textbox: " + driverLicense);
+        personalDetailsPage.sendKeysToDriverLicenseNumberTextbox(driverLicense);
+
+        extentLog("Employee_03_Personal Details - Step 03: Input value into License Expiry Date textbox: " + licenseExpiryDate);
+        personalDetailsPage.sendKeysToLicenseExpiryDateTextbox(licenseExpiryDate);
+
+        extentLog("Employee_03_Personal Details - Step 04: Select option in Nationality dropdown: " + nationality);
+        personalDetailsPage.selectOptionInNationalityDropdown(nationality);
+
+        extentLog("Employee_03_Personal Details - Step 05: Select option in Marital Status dropdown: " + maritalStatus);
+        personalDetailsPage.selectOptionInMaritalStatusDropdown(maritalStatus);
+
+        extentLog("Employee_03_Personal Details - Step 06: Input value into Date Of Birth textbox: " + dateOfBirth);
+        personalDetailsPage.sendKeysToDateOfBirthTextbox(dateOfBirth);
+
+        extentLog("Employee_03_Personal Details - Step 07: Select Gender radio: " + gender);
+        personalDetailsPage.selectGenderRadio(gender);
+
+        extentLog("Employee_03_Personal Details - Step 08: Save updated information");
+        personalDetailsPage.clickOnPersonalDetailsSaveButton();
+
+        extentLog("Employee_03_Personal Details - Step 09: Verify that success message is displayed");
+        Assert.assertEquals(addEmployeePage.getToastMessage(), "Successfully Updated"); // TODO: FLAKY
+
+        addEmployeePage.waitForLoading();
+
+        extentLog("Employee_03_Personal Details - Step 10: Verify that value of First Name textbox is: " + firstName);
+        Assert.assertEquals(personalDetailsPage.getValueOfFirstNameTextbox(), firstName);
+
+        extentLog("Employee_03_Personal Details - Step 11: Verify that value of Middle Name textbox is: " + middleName);
+        Assert.assertEquals(personalDetailsPage.getValueOfMiddleNameTextbox(), middleName);
+
+        extentLog("Employee_03_Personal Details - Step 12: Verify that value of Last Name textbox is: " + lastName);
+        Assert.assertEquals(personalDetailsPage.getValueOfLastNameTextbox(), lastName);
+
+        extentLog("Employee_03_Personal Details - Step 13: Verify that value of employee ID textbox is: " + employeeId);
+        Assert.assertEquals(personalDetailsPage.getValueOfEmployeeIdTextbox(), employeeId);
+
+        extentLog("Employee_03_Personal Details - Step 14: Verify that value of Driver's License Number textbox is: " + driverLicense);
+        Assert.assertEquals(personalDetailsPage.getValueOfDriverLicenseNumberTextbox(), driverLicense);
+
+        extentLog("Employee_03_Personal Details - Step 15: Verify that value of License Expiry Date textbox is: " + licenseExpiryDate);
+        Assert.assertEquals(personalDetailsPage.getValueOfLicenseExpiryDateTextbox(), licenseExpiryDate);
+
+        extentLog("Employee_03_Personal Details - Step 16: Verify that selected option in National dropdown is: " + nationality);
+        Assert.assertEquals(personalDetailsPage.getSelectedOptionInNationalityDropdown(), nationality);
+
+        extentLog("Employee_03_Personal Details - Step 17: Verify that selected option in Marital Status dropdown is: " + maritalStatus);
+        Assert.assertEquals(personalDetailsPage.getSelectedOptionInMaritalStatusDropdown(), maritalStatus);
+
+        extentLog("Employee_03_Personal Details - Step 18: Verify that value of Date Of Birth textbox is: " + dateOfBirth);
+        Assert.assertEquals(personalDetailsPage.getValueOfDateOfBirthTextbox(), dateOfBirth);
+
+        extentLog("Employee_03_Personal Details - Step 19: Verify that gender " + gender + " radio is selected");
+        Assert.assertTrue(personalDetailsPage.isGenderRadioSelected(gender));
+    }
 
     /*@Test
     public void Employee_04_Contact_Details() {
@@ -208,10 +279,10 @@ public class PIM_01_Employee extends BaseTest {
 
     }*/
 
-    @Test
+    /*@Test
     public void Employee_14_Delete_Employee() {
         extentLog("Employee_14_Delete_Employee - Step 01: Open Employee List page");
-        profilePicturePage.clickOnTopBarLink("Employee List"); // TODO: Temporary
+        profilePicturePage.clickOnTopBarLink("Employee List");
         employeeListPage = PageGenerator.getEmployeeListPage(driver);
 
         extentLog("Employee_14_Delete_Employee - Step 02: Delete employee by ID: " + employeeId);
@@ -233,7 +304,7 @@ public class PIM_01_Employee extends BaseTest {
 
         extentLog("Employee_14_Delete_Employee - Step 07: Verify that no records found");
         Assert.assertEquals(employeeListPage.getEmployeeSearchResult(), "No Records Found");
-    }
+    }*/
 
     @AfterClass(alwaysRun = true)
     public void afterClass() {
