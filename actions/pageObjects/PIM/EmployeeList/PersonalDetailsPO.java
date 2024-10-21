@@ -1,5 +1,6 @@
 package pageObjects.PIM.EmployeeList;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import pageObjects.PimPO;
 import pageUIs.PIM.EmployeeList.PersonalDetailsPUI;
@@ -31,7 +32,6 @@ public class PersonalDetailsPO extends PimPO {
         waitForElementVisible(driver, PersonalDetailsPUI.EMPLOYEE_ID_TEXTBOX);
         return getAttributeValue(driver, PersonalDetailsPUI.EMPLOYEE_ID_TEXTBOX, "value");
     }
-
 
     public void sendKeysToDriverLicenseNumberTextbox(String driverLicense) {
         waitForElementVisible(driver, PersonalDetailsPUI.DRIVER_LICENSE_NUMBER_TEXTBOX);
@@ -76,7 +76,6 @@ public class PersonalDetailsPO extends PimPO {
     public void clickOnPersonalDetailsSaveButton() {
         waitForElementClickable(driver, PersonalDetailsPUI.PERSONAL_DETAILS_SAVE_BUTTON);
         clickOnElement(driver, PersonalDetailsPUI.PERSONAL_DETAILS_SAVE_BUTTON);
-        waitForLoading();
     }
 
     public String getValueOfDriverLicenseNumberTextbox() {
@@ -105,7 +104,20 @@ public class PersonalDetailsPO extends PimPO {
     }
 
     public boolean isGenderRadioSelected(String gender) {
+        waitForElementSelected(driver, PersonalDetailsPUI.DYNAMIC_GENDER_RADIO, gender);
         return isElementSelected(driver, PersonalDetailsPUI.DYNAMIC_GENDER_RADIO, gender);
+    }
+
+    public void sendKeysToFirstNameTextbox(String firstName) {
+        waitForElementVisible(driver, PersonalDetailsPUI.FIRST_NAME_TEXTBOX);
+        sendKeysToElement(driver, PersonalDetailsPUI.FIRST_NAME_TEXTBOX, Keys.chord(Keys.CONTROL, "a", Keys.BACK_SPACE));
+        sendKeysToElement(driver, PersonalDetailsPUI.FIRST_NAME_TEXTBOX, firstName);
+    }
+
+    public void sendKeysToLastNameTextbox(String lastName) {
+        waitForElementVisible(driver, PersonalDetailsPUI.LAST_NAME_TEXTBOX);
+        sendKeysToElement(driver, PersonalDetailsPUI.LAST_NAME_TEXTBOX, Keys.chord(Keys.CONTROL, "a", Keys.BACK_SPACE));
+        sendKeysToElement(driver, PersonalDetailsPUI.LAST_NAME_TEXTBOX, lastName);
     }
 
 }

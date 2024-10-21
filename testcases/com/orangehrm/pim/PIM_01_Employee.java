@@ -37,6 +37,7 @@ public class PIM_01_Employee extends BaseTest {
 
     private String firstName, middleName, lastName, profilePicture1, profilePicture2, employeeId, usernamePrefix, password;
     private String driverLicense, licenseExpiryDate, nationality, maritalStatus, dateOfBirth, gender;
+    private String newFirstName, newLastName;
 
     @Parameters("browser")
     @BeforeClass
@@ -62,6 +63,9 @@ public class PIM_01_Employee extends BaseTest {
         maritalStatus = getRandomMaritalStatus();
         dateOfBirth = getRandomDateWithinYearRange(1970, 2010);
         gender = getRandomGender();
+
+        newFirstName = "Hoang Hai";
+        newLastName = "Phan";
     }
 
     @Test
@@ -176,7 +180,7 @@ public class PIM_01_Employee extends BaseTest {
         personalDetailsPage.clickOnPersonalDetailsSaveButton();
 
         extentLog("Employee_03_Personal Details - Step 09: Verify that success message is displayed");
-        Assert.assertEquals(addEmployeePage.getToastMessage(), "Successfully Updated"); // TODO: FLAKY
+        Assert.assertEquals(addEmployeePage.getToastMessage(), "Successfully Updated");
 
         addEmployeePage.waitForLoading();
 
@@ -209,6 +213,33 @@ public class PIM_01_Employee extends BaseTest {
 
         extentLog("Employee_03_Personal Details - Step 19: Verify that gender " + gender + " radio is selected");
         Assert.assertTrue(personalDetailsPage.isGenderRadioSelected(gender));
+
+        extentLog("Employee_03_Personal Details - Step 20: Input value into First Name textbox: " + newFirstName);
+        personalDetailsPage.sendKeysToFirstNameTextbox(newFirstName);
+
+        extentLog("Employee_03_Personal Details - Step 21: Input value into Last Name textbox: " + newLastName);
+        personalDetailsPage.sendKeysToLastNameTextbox(newLastName);
+
+        extentLog("Employee_03_Personal Details - Step 22: Save updated information");
+        personalDetailsPage.clickOnPersonalDetailsSaveButton();
+
+        extentLog("Employee_03_Personal Details - Step 23: Verify that success message is displayed");
+        Assert.assertEquals(addEmployeePage.getToastMessage(), "Successfully Updated");
+
+        personalDetailsPage.waitForLoading();
+
+        extentLog("Employee_03_Personal Details - Step 24: Verify that value of First Name textbox is: " + newFirstName);
+        Assert.assertEquals(personalDetailsPage.getValueOfFirstNameTextbox(), newFirstName);
+
+        extentLog("Employee_03_Personal Details - Step 25: Verify that value of Last Name textbox is: " + newLastName);
+        Assert.assertEquals(personalDetailsPage.getValueOfLastNameTextbox(), newLastName);
+
+        extentLog("Employee_03_Personal Details - Step 26: Refresh current page");
+        personalDetailsPage.refreshCurrentPage(driver);
+        personalDetailsPage.waitForLoading();
+
+        extentLog("Employee_03_Personal Details - Step 27: Verify that Employee Name is displayed: " + newFirstName + " " + newLastName);
+        Assert.assertEquals(personalDetailsPage.getEmployeeName(), newFirstName + " " + newLastName);
     }
 
     /*@Test
